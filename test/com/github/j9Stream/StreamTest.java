@@ -45,11 +45,11 @@ public class StreamTest {
     @Test
     public void ofNullable() throws Exception {
         // arrange
-        List<String> list = Arrays.asList("Angular", "React");
+        List<String> list = Arrays.asList("Angular", "ES7", "React");
         Map<String, Integer> map = new HashMap<>() {
             {
-                put("Backbone", 1);
-                put("Angular", 2);
+                put("Angular", 1);
+                put("ES2016", 2);
                 put("React", 3);
             }
         };
@@ -58,7 +58,8 @@ public class StreamTest {
         List<Integer> actual = list.stream().flatMap(str -> Stream.ofNullable(map.get(str))).collect(Collectors.toList());
 
         // assert
-        assertEquals(2, actual.get(0).intValue());
+        assertEquals(2, actual.size());
+        assertEquals(1, actual.get(0).intValue());
         assertEquals(3, actual.get(1).intValue());
     }
 }
