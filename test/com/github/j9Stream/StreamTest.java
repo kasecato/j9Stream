@@ -3,8 +3,9 @@ package com.github.j9Stream;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,17 +45,20 @@ public class StreamTest {
     @Test
     public void ofNullable() throws Exception {
         // arrange
-        int[] listA = null;
-        int[] listB = new int[] { 0, 1 };
+        List<String> list = Arrays.asList("Angular", "React");
+        Map<String, Integer> map = new HashMap<>() {
+            {
+                put("Backbone", 1);
+                put("Angular", 2);
+                put("React", 3);
+            }
+        };
 
         // act
-        Optional<int[]> actualA = Stream.ofNullable(listA).findFirst();
-        Optional<int[]> actualB = Stream.ofNullable(listB).findFirst();
+        List<Integer> actual = list.stream().flatMap(str -> Stream.ofNullable(map.get(str))).collect(Collectors.toList());
 
         // assert
-        assertEquals(false, actualA.isPresent());
-        assertEquals(true, actualB.isPresent());
-        assertEquals(0, actualB.get()[0]);
-        assertEquals(1, actualB.get()[1]);
+        assertEquals(2, actual.get(0).intValue());
+        assertEquals(3, actual.get(1).intValue());
     }
 }
