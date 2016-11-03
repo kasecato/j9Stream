@@ -1,6 +1,5 @@
-package com.lib;
+package com.lib.close;
+import java.util.function.Function;
 public class PrivateB {
-    public int addOne(final int x) {
-        return x + 1;
-    }
+    public Function<Integer, Integer> addOne = x -> x + 1;
 }
